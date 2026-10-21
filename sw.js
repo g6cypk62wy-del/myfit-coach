@@ -2,7 +2,7 @@
 // Stratégie « réseau d'abord » : en ligne, on prend toujours la version la plus récente ;
 // hors ligne, on sert la dernière copie enregistrée.
 // Changer CACHE à chaque nouvelle version publiée.
-const CACHE = 'myfit-v0.9.0';
+const CACHE = 'myfit-v0.9.1';
 const SHELL = [
   './', 'index.html', 'styles.css', 'manifest.webmanifest',
   'icons/icon.svg', 'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png',
