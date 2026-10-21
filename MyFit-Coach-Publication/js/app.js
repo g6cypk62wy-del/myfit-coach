@@ -20,7 +20,7 @@ import * as idees from './views/idees.js';
 import { elapsedMs, formatClock } from './training/session.js';
 import { ensureMeta } from './backup.js';
 
-export const VERSION = '0.9.0';
+export const VERSION = '0.9.1';
 
 const TABS = [
   { id: 'accueil', label: 'Accueil', icon: 'home', view: accueil },
@@ -198,15 +198,13 @@ function showUpdate(worker) {
   document.body.append(bar);
 }
 
-// Demande au navigateur de ne pas effacer les données (si l'app en contient).
+// Demande au navigateur de ne pas effacer les données (à chaque ouverture, si l'app en contient) :
+// sur iPhone, la demande répétée protège mieux les données de l'app installée sur l'écran d'accueil.
 async function askPersistence() {
   if (!store.keys().some((k) => k !== 'meta' && k !== 'settings')) return;
-  const meta = store.get('meta', {});
-  if (meta.persistAsked) return;
   try {
-    if (navigator.storage?.persist) await navigator.storage.persist();
+    if (navigator.storage?.persist && !(await navigator.storage.persisted?.())) await navigator.storage.persist();
   } catch { /* sans conséquence */ }
-  store.set('meta', { ...store.get('meta', {}), persistAsked: true });
 }
 
 function start() {
